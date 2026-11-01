@@ -1,8 +1,12 @@
 # ADAPT Comprehensive Test Report
 
-Adversarial QA of the DEVELOPMENT branch (`research-validation`, HEAD `54bb27a` plus the uncommitted
-multi-UAV integration), October 2026. Every result below comes from a command that was actually run; the
-QA suite is in `qa/` (see `qa/README.md`). Nothing was committed: all changes are in the working tree.
+Adversarial QA of the code base after the multi-UAV integration (see `docs/MULTI_UAV_INTEGRATION.md`),
+October 2026. Every result below comes from a command that was actually run; the QA suite is in `qa/` (see
+`qa/README.md`), and all fixes described here are included in this repository.
+
+Two inputs referred to below are not included in this repository: the 26 multi-base experiment sessions on
+the bundled maps (section 3, "Real maps") and the mutation-testing script (section 18). Their results are
+recorded here; everything else can be re-run from `tests/` and `qa/`.
 
 ## 1. Environment
 
@@ -60,7 +64,7 @@ Coverage gaps at baseline: interactive GUI code (`image_processing.select_sample
 S1 one region, S2 two regions, S3 normal maps, S4 100 regions, S9 obstacles (ring enclosure, comb corridors),
 S10 strong weather (12 mm, 35 km/h, 4 h), S11 RTL/LAND last, S12 empty map (no file written): all pass; every
 mission passes the independent validator, with one DO_SET_SERVO per region. S5 route optimisation: the
-nearest-neighbour order is a heuristic (not optimal, see paper). **S7 battery and S8 payload: not applicable**: the
+nearest-neighbour order is a heuristic (not optimal; 3.2 % longer than optimal on Varanasi, see the README's evaluation summary). **S7 battery and S8 payload: not applicable**: the
 single-UAV mode has no battery or payload model (documented limitation; the multi-base mode with `--max-bases 1`
 is the battery-aware single-UAV planner). S6 unreachable: an enclosed drop is reached by a logged straight
 fallback leg (documented behaviour of this mode). Single-mode missions on the three bundled maps are

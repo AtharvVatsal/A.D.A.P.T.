@@ -81,15 +81,16 @@ tests/                      test suite, independent geodesy reference and missio
 scripts/                    test_pathfinding_dummy.py (visual routing demo on a synthetic grid)
 docs/                       MULTI_UAV_INTEGRATION.md (multi-UAV integration), QA_REPORT.md (adversarial QA results)
 qa/                         adversarial QA suite: property, end-to-end, fuzz and stress tests (run explicitly)
-paper/                      research manuscript, evaluation scripts and results (see paper/README.md)
 ```
 
 ## Setup
 
-The pipeline requires Python 3.8+. The test suite and the paper's evaluation scripts need Python
-3.11+. All results reported here were produced with Python 3.11.9.
+The pipeline requires Python 3.8+. The test suite needs Python 3.11+. All results reported here were
+produced with Python 3.11.9.
 
 ```powershell
+git clone https://github.com/AtharvVatsal/A.D.A.P.T..git
+cd A.D.A.P.T.
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1        # bash: source .venv/Scripts/activate (Windows) or .venv/bin/activate
 pip install -r requirements.txt
@@ -100,8 +101,8 @@ If PowerShell refuses to run `Activate.ps1`, run
 `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` once. Note that the
 activation command has no trailing backslash.
 
-To reproduce the exact package versions used in the paper, install from
-`paper/experiments/requirements-paper.txt` instead.
+`requirements.txt` does not pin versions. The versions used for the reported results are listed in
+`docs/QA_REPORT.md` (section 1).
 
 On a server without a display, install `opencv-python-headless`. Note that the colour-sampling
 step needs a window.
@@ -295,7 +296,7 @@ WGS84:
 ## Testing and verification
 
 ```powershell
-python -m pytest            # 231 tests + 520 subtests, about 3.5 min
+python -m pytest            # 231 tests + 520 subtests, about 4–5 min
 ```
 
 The suite covers the following:
@@ -348,8 +349,9 @@ Its findings, fixes and the remaining known issues are in `docs/QA_REPORT.md`.
 
 ## Evaluation summary
 
-Results come from the bundled maps with fixed weather and a simulated operator. Details, the
-scripts and the raw data are in `paper/experiments/`.
+Results come from the bundled maps with fixed weather and a simulated operator. The evaluation
+scripts and their raw data are not included in this repository; the numbers below are a record of
+those runs.
 
 | | Varanasi | Kanpur | Assam |
 |---|---|---|---|
@@ -371,7 +373,7 @@ Other findings:
 - **Mutation testing:** 31 of 33 injected bugs are detected by the test suite (the 2 survivors are
   behaviour-equivalent), including all 9 bugs injected into the multi-UAV code.
 
-**Multi-UAV mode** (simulated operator, `--max-bases` 1 → 4; `paper/experiments/multi_uav_comparison.py`):
+**Multi-UAV mode** (simulated operator, `--max-bases` 1 → 4):
 
 | | Varanasi (22 drops) | Kanpur (41 drops) |
 |---|---|---|
@@ -429,13 +431,6 @@ Before any real flight, at minimum:
 5. Confirm drop points are clear of people and structures.
 6. Ground-test the release mechanism with the configured servo channel and PWM.
 7. Follow local aviation regulations.
-
-## Research paper
-
-`paper/` contains an IEEE-format manuscript describing and evaluating this system. It also holds
-all evaluation scripts, their raw results, and the audit files (`paper_facts.md`,
-`claim_evidence_map.csv`, `literature_matrix.csv`). Build and reproduction instructions are in
-`paper/README.md`.
 
 ## Troubleshooting
 
